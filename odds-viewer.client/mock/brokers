@@ -1,0 +1,17 @@
+[
+    {
+        "id":1,
+        "name":"Betfair",
+        "picture_url":""
+    },
+    {
+        "id":2,
+        "name":"Ladbrokers",
+        "picture_url":""
+    },
+    {
+        "id":3,
+        "name":"Coral",
+        "picture_url":""
+    }
+]

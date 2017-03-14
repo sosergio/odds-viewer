@@ -1,0 +1,116 @@
+html {
+    font-family: 'Didact Gothic', sans-serif;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.682353);
+    
+}
+input{
+    font-family: 'Didact Gothic', sans-serif;
+}
+h1,h2,nav{
+    font-family: 'Ubuntu', sans-serif;
+}
+body{
+    margin:0;
+    padding:0;
+    background-color: rgb(245, 245, 245);
+}
+#wrapper{
+    width: 96%;
+    max-width: 1080px;
+    margin: auto;
+    padding:0 2%;
+    background-color: white;
+    border: 1px solid rgb(221, 221, 221);
+    border-top:none;
+    border-bottom:none;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+main{
+    display: flex;
+    padding-bottom:50px;
+}
+h1{
+    float: left;
+    display: block;
+    color:black;
+    line-height: 50px;
+}
+
+header nav {
+    float: left;
+    margin-top: 40px;
+}
+header nav a {
+    display: inline;
+    color:#3dc17b;
+    margin-left: 15px;
+    text-decoration:none;   
+}
+header nav a:hover {
+    border-bottom:2px dotted #3dc17b;
+}
+header nav a.active {
+    font-weight: bold;
+    text-decoration:none;
+    border-bottom:2px solid #3dc17b;
+}
+.list-area{
+    margin-top:30px;
+}
+.list-area table {
+    padding:0;
+    margin: auto;
+    width: 100%;
+}
+.list-area table thead{
+    text-align: left;
+     background-color: #181e23;
+    color: #dce6f0;
+}
+.list-area table td, 
+.list-area table th{
+    border-bottom:1px solid rgb(221, 221, 221);
+    padding:5px 10px;
+}
+aside{
+    margin-left:60px;
+    min-width:500px;
+}
+
+h2{
+    border-bottom: 1px solid rgb(221, 221, 221);
+}
+
+footer{
+    min-height: 150px;
+    padding-top:50px;
+    font-size: 10pt;
+    background-color: #181e23;
+    color: #dce6f0;
+    text-align: center;
+
+}
+
+#overing-team{
+    position:absolute; 
+    border:1px solid black; 
+    background-color:lightgray; 
+    width:200px;
+    padding:10px;
+}
+
+
+/* Media Queries */
+@media screen and (max-width: 940px) {
+    main{
+        flex-direction: column;
+    }
+    aside{
+        margin-top:10px;
+        margin-left:0px;
+        width: 100%;
+    }
+}

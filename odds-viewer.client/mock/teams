@@ -1,0 +1,27 @@
+[
+    {
+        "id":1,
+        "name":"Barcelona",
+        "picture_url":""
+    },
+    {
+        "id":2,
+        "name":"Bayern Munich",
+        "picture_url":""
+    },
+    {
+        "id":3,
+        "name":"Real Madrid",
+        "picture_url":""
+    },
+    {
+        "id":4,
+        "name":"Juventus",
+        "picture_url":""
+    },
+    {
+        "id":5,
+        "name":"Borussia Dortmund",
+        "picture_url":""
+    }
+]

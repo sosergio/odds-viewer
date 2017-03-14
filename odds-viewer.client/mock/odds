@@ -1,0 +1,32 @@
+[
+    {
+        "value": 3,
+        "team_id":1,
+        "broker_id":1
+    },
+    {
+        "value": 2.75,
+        "team_id":1,
+        "broker_id":2
+    },
+    {
+        "value": 2.75,
+        "team_id":1,
+        "broker_id":3
+    },
+    {
+        "value": 3,
+        "team_id":2,
+        "broker_id":1
+    },
+    {
+        "value": 3,
+        "team_id":2,
+        "broker_id":2
+    },
+    {
+        "value": 3,
+        "team_id":2,
+        "broker_id":3
+    }
+]
