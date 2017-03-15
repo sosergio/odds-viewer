@@ -50,16 +50,16 @@ module.exports = (oddRepository, teamRepository, brokerRepository) => {
 
             //init teams
             var teams = ["Barcelona", "Bayern Munich", "Real Madrid", "Juventus", "Borussia Dortmund", "Atletico Madrid", "Manchester City", "Sevilla", "Monaco", "Leicester", "Porto", "Bayern Leverkusen"];
-            var counter = 1;
+            var counterTeams = 1;
             teams.map(t => {
                 this._teamRepository.create({
                     name:t,
-                    team_id:counter
+                    team_id:counterTeams
                 }, function (err, small) {
                     if (err) reject(err);
                     console.log("saved team " + t);
                 });
-                counter = counter++;
+                counterTeams = counterTeams++;
             });
 
             //init brokers
