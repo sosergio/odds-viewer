@@ -4,11 +4,9 @@ import { Team } from '../services/team';
 @Component({
   template: `
     <main>
-        <div class="column">
-            <div class="list-area">
-                <ow-odds-list (onTeamSelected)="handleOnTeamSelected($event)"></ow-odds-list>
-            </div>
-        </div>
+        <div class="column list-area">
+            <ow-odds-list (onTeamSelected)="handleOnTeamSelected($event)"></ow-odds-list>
+        </div>        
         <aside class="column">
             <ow-odds-graph [team]="selectedTeam"></ow-odds-graph>
         </aside>

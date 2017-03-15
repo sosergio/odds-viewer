@@ -9,7 +9,8 @@ import 'rxjs/add/operator/mergeMap';
 @Component({
   selector: 'ow-odds-list',
   template: 
-  `<table cellspacing="0">
+  `<h2>Best Odds</h2>
+  <table cellspacing="0">
       <thead>
           <tr>
               <th>Team</th>
@@ -18,19 +19,27 @@ import 'rxjs/add/operator/mergeMap';
       </thead>
       <tbody>
           <tr *ngFor="let t of teams" >
-            <td (mousemove)="over($event, t)" (mouseleave)="overingTeam=null"><a href="#" (click)="onTeamClick(t)">{{t.name}}</a></td>
-            <td *ngFor="let b of brokers">{{findOdd(b.id, t.id)}}</td>
+            <td><a href="#" (click)="onTeamClick(t)">{{t.name}}</a></td>
+            <td *ngFor="let b of brokers" (mousemove)="over($event, findOdd(b.id, t.id))" (mouseleave)="overingOdd=null">{{findBestOdd(b.id, t.id)}}</td>
           </tr>
       </tbody>
   </table>
-  <div [style.left]="mouseLeft" [style.top]="mouseTop" id="overing-team" [style.opacity]="overingTeam?1:0">You are overing on {{overingTeam?.name}}</div>
+  <div [style.left]="mouseLeft" [style.top]="mouseTop" id="overing-odd" [style.opacity]="overingOdd?1:0">
+      <em>{{overingOdd?.broker?.name}} odds for {{overingOdd?.team?.name}}:</em>
+      <table>
+        <tr>
+          <td *ngFor="let oo of overingOdd?.values">{{oo}}</td>
+        </tr>
+      </table>
+  </div>
   `,
 })
 export class OwOddsListComponent {
     
+    oddsHashMap:Object;
     odds:Odd[];
     teams:Team[];
-    overingTeam:Team;
+    overingOdd:Odd;
     brokers:Broker[];
     oddsService:OddsService;
     mouseLeft:string;
@@ -47,26 +56,34 @@ export class OwOddsListComponent {
                 .subscribe((res:Team[]) => {
                   this.teams = res;
                   this.oddsService.getOdds()
-                      .subscribe((res:Odd[]) => this.odds = res);
+                      .subscribe((res:Odd[]) => {
+                          this.odds = res.map(r => {
+                              r.broker = this.brokers.find(b => b.id === r.broker_id);
+                              r.team = this.teams.find(t => t.id === r.team_id);
+                              return r;
+                          });
+                      });
                 });
           });
     }
 
-    findOdd(brokerId:number, teamId:number):string{
+    findBestOdd(brokerId:number, teamId:number):string{
       var odd = this.odds.find(o => o.broker_id == brokerId && o.team_id == teamId);
-      if(odd) return odd.value.toString();
+      if(odd) return Math.max.apply(0, odd.values).toString();
       else return " - ";
     }
+    findOdd(brokerId:number, teamId:number):Odd{
+      return this.odds.find(o => o.broker_id == brokerId && o.team_id == teamId);
+    }
 
-    over(event:MouseEvent, team:Team){
+    over(event:MouseEvent, odd:Odd){
       this.mouseLeft = event.pageX + 10 + "px";
       this.mouseTop = event.pageY + 10 + "px";
-      this.overingTeam = team;
+      this.overingOdd = odd;
+      console.log(odd);
     }
 
     onTeamClick(team:Team){
-      console.log("clicked " + team.name);
       this.onTeamSelected.emit(team);
-      
     }
 }

@@ -24,24 +24,33 @@ var OwOddsListComponent = (function () {
                 .subscribe(function (res) {
                 _this.teams = res;
                 _this.oddsService.getOdds()
-                    .subscribe(function (res) { return _this.odds = res; });
+                    .subscribe(function (res) {
+                    _this.odds = res.map(function (r) {
+                        r.broker = _this.brokers.find(function (b) { return b.id === r.broker_id; });
+                        r.team = _this.teams.find(function (t) { return t.id === r.team_id; });
+                        return r;
+                    });
+                });
             });
         });
     }
-    OwOddsListComponent.prototype.findOdd = function (brokerId, teamId) {
+    OwOddsListComponent.prototype.findBestOdd = function (brokerId, teamId) {
         var odd = this.odds.find(function (o) { return o.broker_id == brokerId && o.team_id == teamId; });
         if (odd)
-            return odd.value.toString();
+            return Math.max.apply(0, odd.values).toString();
         else
             return " - ";
     };
-    OwOddsListComponent.prototype.over = function (event, team) {
+    OwOddsListComponent.prototype.findOdd = function (brokerId, teamId) {
+        return this.odds.find(function (o) { return o.broker_id == brokerId && o.team_id == teamId; });
+    };
+    OwOddsListComponent.prototype.over = function (event, odd) {
         this.mouseLeft = event.pageX + 10 + "px";
         this.mouseTop = event.pageY + 10 + "px";
-        this.overingTeam = team;
+        this.overingOdd = odd;
+        console.log(odd);
     };
     OwOddsListComponent.prototype.onTeamClick = function (team) {
-        console.log("clicked " + team.name);
         this.onTeamSelected.emit(team);
     };
     __decorate([
@@ -51,7 +60,7 @@ var OwOddsListComponent = (function () {
     OwOddsListComponent = __decorate([
         core_1.Component({
             selector: 'ow-odds-list',
-            template: "<table cellspacing=\"0\">\n      <thead>\n          <tr>\n              <th>Team</th>\n              <th *ngFor=\"let b of brokers\">{{b.name}}</th>\n          </tr>\n      </thead>\n      <tbody>\n          <tr *ngFor=\"let t of teams\" >\n            <td (mousemove)=\"over($event, t)\" (mouseleave)=\"overingTeam=null\"><a href=\"#\" (click)=\"onTeamClick(t)\">{{t.name}}</a></td>\n            <td *ngFor=\"let b of brokers\">{{findOdd(b.id, t.id)}}</td>\n          </tr>\n      </tbody>\n  </table>\n  <div [style.left]=\"mouseLeft\" [style.top]=\"mouseTop\" id=\"overing-team\" [style.opacity]=\"overingTeam?1:0\">You are overing on {{overingTeam?.name}}</div>\n  ",
+            template: "<h2>Best Odds</h2>\n  <table cellspacing=\"0\">\n      <thead>\n          <tr>\n              <th>Team</th>\n              <th *ngFor=\"let b of brokers\">{{b.name}}</th>\n          </tr>\n      </thead>\n      <tbody>\n          <tr *ngFor=\"let t of teams\" >\n            <td><a href=\"#\" (click)=\"onTeamClick(t)\">{{t.name}}</a></td>\n            <td *ngFor=\"let b of brokers\" (mousemove)=\"over($event, findOdd(b.id, t.id))\" (mouseleave)=\"overingOdd=null\">{{findBestOdd(b.id, t.id)}}</td>\n          </tr>\n      </tbody>\n  </table>\n  <div [style.left]=\"mouseLeft\" [style.top]=\"mouseTop\" id=\"overing-odd\" [style.opacity]=\"overingOdd?1:0\">\n      <em>{{overingOdd?.broker?.name}} odds for {{overingOdd?.team?.name}}:</em>\n      <table>\n        <tr>\n          <td *ngFor=\"let oo of overingOdd?.values\">{{oo}}</td>\n        </tr>\n      </table>\n  </div>\n  ",
         }), 
         __metadata('design:paramtypes', [odds_service_1.OddsService])
     ], OwOddsListComponent);

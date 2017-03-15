@@ -1,31 +1,31 @@
 [
     {
-        "value": 3,
+        "values": [3,3.1,2.8],
         "team_id":1,
         "broker_id":1
     },
     {
-        "value": 2.75,
+        "values": [3,3.1,2.8],
         "team_id":1,
         "broker_id":2
     },
     {
-        "value": 2.75,
+        "values": [2.5,2.4,2.75],
         "team_id":1,
         "broker_id":3
     },
     {
-        "value": 3,
+        "values": [2.5,2.4,2.75],
         "team_id":2,
         "broker_id":1
     },
     {
-        "value": 3,
+        "values": [2.5,2.4,2.75],
         "team_id":2,
         "broker_id":2
     },
     {
-        "value": 3,
+        "values": [2.5,2.4,2.75],
         "team_id":2,
         "broker_id":3
     }

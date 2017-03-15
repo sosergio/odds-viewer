@@ -1,8 +1,8 @@
 "use strict";
 var Odd = (function () {
-    function Odd(date, value, teamId, brokerId) {
+    function Odd(date, values, teamId, brokerId) {
         this.created = date;
-        this.value = value;
+        this.values = values;
         this.team_id = teamId;
         this.broker_id = brokerId;
     }

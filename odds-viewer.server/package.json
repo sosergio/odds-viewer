@@ -1,0 +1,24 @@
+{
+  "name": "odds-viewer-server",
+  "version": "0.0.1",
+  "description": "A basic node backend",
+  "engines": {
+    "node": "5.9.1"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "ejs": "2.4.1",
+    "express": "4.13.3",
+    "http-status": "^1.0.1",
+    "mongoose": "^4.8.6"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "license": "MIT"
+}

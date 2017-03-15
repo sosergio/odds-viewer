@@ -17,13 +17,10 @@ var OwOddsGraphComponent = (function () {
     }
     OwOddsGraphComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
-        var ob = { x: 1 };
-        ob.x = 2;
         if (this.team) {
             this.oddsService.getOddsHistory(this.team.id)
                 .subscribe(function (res) {
                 console.log(res);
-                _this.odds = res;
                 _this.options = {
                     title: { text: _this.team.name },
                     xAxis: {
@@ -31,11 +28,15 @@ var OwOddsGraphComponent = (function () {
                     },
                     series: [{
                             data: res.map(function (r) {
-                                return { y: r.value, x: r.created, name: 'hello' };
+                                var best = Math.max.apply(0, r.values);
+                                return { y: best, x: r.created, name: _this.team.name + " best odd on " + r.created.toLocaleDateString() };
                             }),
                         }]
                 };
             });
+        }
+        else {
+            this.options = {};
         }
     };
     __decorate([

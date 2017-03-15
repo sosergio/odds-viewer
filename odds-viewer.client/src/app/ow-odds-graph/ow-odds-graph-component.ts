@@ -12,28 +12,20 @@ import { Team } from '../services/team';
     <chart [hidden]="!team" [options]="options"></chart>
   `,
 })
-export class OwOddsGraphComponent implements OnChanges {
-    
+export class OwOddsGraphComponent implements OnChanges {  
   @Input() team:Team;
 
-  odds:Odd[];
   oddsService:OddsService;
   options: Object;
   constructor(_oddsService:OddsService){
     this.oddsService = _oddsService; 
-    
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-
-var ob = {x : 1};
-ob.x = 2;
-
       if(this.team){
         this.oddsService.getOddsHistory(this.team.id)
         .subscribe((res:Odd[]) => {
           console.log(res);
-          this.odds = res;
           this.options = {
             title : { text : this.team.name },
             xAxis: {
@@ -41,11 +33,14 @@ ob.x = 2;
             },
             series: [{
                 data: res.map(r => { 
-                  return {y:r.value, x:r.created, name:'hello'};
+                  var best = Math.max.apply(0, r.values);
+                  return {y:best, x:r.created, name:this.team.name + " best odd on " + r.created.toLocaleDateString()};
                 }),
             }]
-        };
+          };
         });
+      } else {
+        this.options = {};
       }
   }
 

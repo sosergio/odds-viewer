@@ -48,7 +48,9 @@ var OddsService = (function () {
             for (var i = 0; i < 15; i++) {
                 var d = this.daysInPast(i);
                 var v = this.getRandom(value - 1, value + 1);
-                mocks.push(new odd_1.Odd(d, v, teamId, 1));
+                var v2 = this.getRandom(v - 0.5, v + 0.5);
+                var v3 = this.getRandom(v - 0.5, v + 0.5);
+                mocks.push(new odd_1.Odd(d, [v, v2, v3], teamId, 1));
             }
             return Observable_1.Observable.from(new Array(mocks));
         }

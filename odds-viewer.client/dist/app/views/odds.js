@@ -19,7 +19,7 @@ var OddsView = (function () {
     };
     OddsView = __decorate([
         core_1.Component({
-            template: "\n    <main>\n        <div class=\"column\">\n            <div class=\"list-area\">\n                <ow-odds-list (onTeamSelected)=\"handleOnTeamSelected($event)\"></ow-odds-list>\n            </div>\n        </div>\n        <aside class=\"column\">\n            <ow-odds-graph [team]=\"selectedTeam\"></ow-odds-graph>\n        </aside>\n    <main>\n  "
+            template: "\n    <main>\n        <div class=\"column list-area\">\n            <ow-odds-list (onTeamSelected)=\"handleOnTeamSelected($event)\"></ow-odds-list>\n        </div>        \n        <aside class=\"column\">\n            <ow-odds-graph [team]=\"selectedTeam\"></ow-odds-graph>\n        </aside>\n    <main>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], OddsView);

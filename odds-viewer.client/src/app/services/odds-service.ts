@@ -33,11 +33,11 @@ export class OddsService {
             .map(res => res.json() as Broker[]);
     } 
 
-    getRandom(min:number, max:number):number {
+    private getRandom(min:number, max:number):number {
         return Math.random() * (max - min + 1) + min;
     }
 
-    daysInPast(days:number):Date{
+    private daysInPast(days:number):Date{
         var dat = new Date();
         dat.setDate(dat.getDate() - days);
         return dat;        
@@ -51,14 +51,15 @@ export class OddsService {
             for(var i=0; i<15; i++){
                 let d = this.daysInPast(i);
                 let v = this.getRandom(value -1, value+1);
-                mocks.push(new Odd(d,v,teamId,1));
+                let v2 = this.getRandom(v -0.5, v+0.5);
+                let v3 = this.getRandom(v -0.5, v+0.5);
+                mocks.push(new Odd(d,[v,v2,v3],teamId,1));
             }
             return Observable.from(new Array(mocks));
        }
        else{
             return this._httpProxy.getAsync("/odds/" + teamId)
                 .map(res => res.json() as Odd[]);
-                
        }
     } 
 }
