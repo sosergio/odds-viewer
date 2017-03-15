@@ -17,7 +17,7 @@ const connect = (options) => {
         // When successfully connected
         mongoose.connection.on('connected', function () {  
             console.log('Mongoose default connection open to ' + dbURI);
-            resolve(true);
+            resolve(mongoose.connection);
         }); 
 
         // If the connection throws an error
@@ -25,7 +25,6 @@ const connect = (options) => {
             console.log('Mongoose default connection error: ' + err);
             reject(err);
         }); 
-
     });
 };
   

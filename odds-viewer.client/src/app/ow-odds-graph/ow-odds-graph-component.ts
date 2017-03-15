@@ -8,12 +8,12 @@ import { Team } from '../services/team';
   selector: 'ow-odds-graph',
   template: 
   `<h2>Price Movement</h2> 
-    <div [hidden]="team">Please select a team</div>
-    <chart [hidden]="!team" [options]="options"></chart>
+    <div [hidden]="odd">Please select an odd</div>
+    <chart [hidden]="!odd" [options]="options"></chart>
   `,
 })
 export class OwOddsGraphComponent implements OnChanges {  
-  @Input() team:Team;
+  @Input() odd:Odd;
 
   oddsService:OddsService;
   options: Object;
@@ -22,19 +22,21 @@ export class OwOddsGraphComponent implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-      if(this.team){
-        this.oddsService.getOddsHistory(this.team.id)
+      if(this.odd){
+        this.oddsService.getOddsHistory(this.odd.team_id, this.odd.broker_id)
         .subscribe((res:Odd[]) => {
           console.log(res);
           this.options = {
-            title : { text : this.team.name },
+            title : { text : this.odd.broker.name + " best for " + this.odd.team.name },
             xAxis: {
                 type: 'datetime'
             },
             series: [{
                 data: res.map(r => { 
-                  var best = Math.max.apply(0, r.values);
-                  return {y:best, x:r.created, name:this.team.name + " best odd on " + r.created.toLocaleDateString()};
+                  var o = new Odd(r.created, r.values, r.team_id, r.broker_id);
+                  var d = new Date(r.created);
+                  var best = o.best;
+                  return {y:best, x: d, name:this.odd.team.name + " best odd on " + d.toLocaleDateString()};
                 }),
             }]
           };

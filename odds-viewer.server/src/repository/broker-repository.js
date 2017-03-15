@@ -3,8 +3,11 @@ var Schema       = mongoose.Schema;
 
 var BrokerSchema   = new Schema({
     broker_id:Number,
-    name:Number,
+    name:String,
     pictureUrl:String
 });
 
-module.exports = mongoose.model('Broker', BrokerSchema);
+module.exports = (dbConnection) => {
+    this.dbConnection = dbConnection;
+    return this.dbConnection.model('Broker', BrokerSchema);
+}

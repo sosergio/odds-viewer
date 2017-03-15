@@ -8,6 +8,9 @@ export class Odd {
     broker_id:number;
     broker:Broker;
     team:Team;
+    get best():number {
+        return Math.max.apply(0, this.values);
+    }
 
     constructor(date:Date, values:number[], teamId:number, brokerId:number){
       this.created = date;

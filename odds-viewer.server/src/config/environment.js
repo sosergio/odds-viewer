@@ -20,7 +20,8 @@ const dbSettings = {
 }
 
 const serverSettings = {
-  port: process.env.PORT || 5000
+  port: process.env.PORT || 5000,
+  initMockOdds: true
 }
 
 module.exports = Object.assign({}, { dbSettings, serverSettings })

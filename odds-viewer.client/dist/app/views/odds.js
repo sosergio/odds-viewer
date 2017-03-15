@@ -11,15 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var OddsView = (function () {
     function OddsView() {
-        this.selectedTeam = null;
+        this.selectedOdd = null;
     }
-    OddsView.prototype.handleOnTeamSelected = function (team) {
-        console.log("on click handled");
-        this.selectedTeam = team;
+    OddsView.prototype.handleOnOddSelected = function (odd) {
+        this.selectedOdd = odd;
     };
     OddsView = __decorate([
         core_1.Component({
-            template: "\n    <main>\n        <div class=\"column list-area\">\n            <ow-odds-list (onTeamSelected)=\"handleOnTeamSelected($event)\"></ow-odds-list>\n        </div>        \n        <aside class=\"column\">\n            <ow-odds-graph [team]=\"selectedTeam\"></ow-odds-graph>\n        </aside>\n    <main>\n  "
+            template: "\n    <main>\n        <div class=\"column list-area\">\n            <ow-odds-list (onOddSelected)=\"handleOnOddSelected($event)\"></ow-odds-list>\n        </div>        \n        <aside class=\"column\">\n            <ow-odds-graph [odd]=\"selectedOdd\"></ow-odds-graph>\n        </aside>\n    <main>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], OddsView);

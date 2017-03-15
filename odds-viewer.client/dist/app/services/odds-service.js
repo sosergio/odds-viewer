@@ -22,7 +22,11 @@ var OddsService = (function () {
     }
     OddsService.prototype.getOdds = function () {
         return this._httpProxy.getAsync("/odds")
-            .map(function (res) { return res.json(); });
+            .map(function (res) {
+            var odds = res.json();
+            //this is needed for the getter property to calculate the best value
+            return odds.map(function (o) { return new odd_1.Odd(o.created, o.values, o.team_id, o.broker_id); });
+        });
     };
     OddsService.prototype.getTeams = function () {
         return this._httpProxy.getAsync("/teams")
@@ -40,7 +44,7 @@ var OddsService = (function () {
         dat.setDate(dat.getDate() - days);
         return dat;
     };
-    OddsService.prototype.getOddsHistory = function (teamId) {
+    OddsService.prototype.getOddsHistory = function (teamId, brokerId) {
         if (this.config.getEnv("env") === "mock") {
             var date = new Date();
             var value = this.getRandom(3, 50);
@@ -55,8 +59,12 @@ var OddsService = (function () {
             return Observable_1.Observable.from(new Array(mocks));
         }
         else {
-            return this._httpProxy.getAsync("/odds/" + teamId)
-                .map(function (res) { return res.json(); });
+            return this._httpProxy.getAsync("/odds/teams/" + teamId + "/brokers/" + brokerId)
+                .map(function (res) {
+                var odds = res.json();
+                //this is needed for the getter property to calculate the best value
+                return odds.map(function (o) { return new odd_1.Odd(o.created, o.values, o.team_id, o.broker_id); });
+            });
         }
     };
     OddsService = __decorate([

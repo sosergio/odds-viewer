@@ -1,27 +1,26 @@
 import { Component } from '@angular/core';
-import { Team } from '../services/team';
+import { Odd } from '../services/odd';
 
 @Component({
   template: `
     <main>
         <div class="column list-area">
-            <ow-odds-list (onTeamSelected)="handleOnTeamSelected($event)"></ow-odds-list>
+            <ow-odds-list (onOddSelected)="handleOnOddSelected($event)"></ow-odds-list>
         </div>        
         <aside class="column">
-            <ow-odds-graph [team]="selectedTeam"></ow-odds-graph>
+            <ow-odds-graph [odd]="selectedOdd"></ow-odds-graph>
         </aside>
     <main>
   `
 })
 export class OddsView{
 
-    selectedTeam:Team;
+    selectedOdd:Odd;
     constructor(){
-        this.selectedTeam = null;
+        this.selectedOdd = null;
     }
-    handleOnTeamSelected(team:Team){
-        console.log("on click handled");
-        this.selectedTeam = team;
+    handleOnOddSelected(odd:Odd){
+        this.selectedOdd = odd;
     }
 
 }

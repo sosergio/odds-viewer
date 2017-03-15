@@ -1,5 +1,5 @@
 export class Broker {
-    id: number;
+    broker_id: number;
     name:string;
     picture_url:string;
 }

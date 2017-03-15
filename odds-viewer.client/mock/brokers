@@ -1,17 +1,1 @@
-[
-    {
-        "id":1,
-        "name":"Betfair",
-        "picture_url":""
-    },
-    {
-        "id":2,
-        "name":"Ladbrokers",
-        "picture_url":""
-    },
-    {
-        "id":3,
-        "name":"Coral",
-        "picture_url":""
-    }
-]
+[{"_id":"58c942b28306192ec4d56c25","name":"Ladbrokers","broker_id":2,"__v":0},{"_id":"58c942b28306192ec4d56c24","name":"Betfair","broker_id":1,"__v":0},{"_id":"58c942b28306192ec4d56c26","name":"Coral","broker_id":3,"__v":0}]

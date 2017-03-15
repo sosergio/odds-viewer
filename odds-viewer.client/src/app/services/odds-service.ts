@@ -20,7 +20,11 @@ export class OddsService {
 
     getOdds():Observable<Odd[]>{
        return this._httpProxy.getAsync("/odds")
-            .map(res => res.json() as Odd[]);
+            .map(res => {
+               var odds = res.json() as Odd[];
+               //this is needed for the getter property to calculate the best value
+               return odds.map(o => new Odd(o.created,o.values, o.team_id, o.broker_id));
+            });
     }  
 
     getTeams():Observable<Team[]>{
@@ -43,7 +47,7 @@ export class OddsService {
         return dat;        
     }
     
-    getOddsHistory(teamId:number):Observable<Odd[]>{
+    getOddsHistory(teamId:number, brokerId:number):Observable<Odd[]>{
        if(this.config.getEnv("env") === "mock"){
             var date = new Date();
             var value = this.getRandom(3, 50);
@@ -58,8 +62,12 @@ export class OddsService {
             return Observable.from(new Array(mocks));
        }
        else{
-            return this._httpProxy.getAsync("/odds/" + teamId)
-                .map(res => res.json() as Odd[]);
+            return this._httpProxy.getAsync("/odds/teams/" + teamId+ "/brokers/" + brokerId)
+                .map(res => {
+                    var odds = res.json() as Odd[];
+                    //this is needed for the getter property to calculate the best value
+                    return odds.map(o => new Odd(o.created,o.values, o.team_id, o.broker_id));
+                });
        }
     } 
 }

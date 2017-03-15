@@ -10,26 +10,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var odds_service_1 = require('../services/odds-service');
-var team_1 = require('../services/team');
+var odd_1 = require('../services/odd');
 var OwOddsGraphComponent = (function () {
     function OwOddsGraphComponent(_oddsService) {
         this.oddsService = _oddsService;
     }
     OwOddsGraphComponent.prototype.ngOnChanges = function (changes) {
         var _this = this;
-        if (this.team) {
-            this.oddsService.getOddsHistory(this.team.id)
+        if (this.odd) {
+            this.oddsService.getOddsHistory(this.odd.team_id, this.odd.broker_id)
                 .subscribe(function (res) {
                 console.log(res);
                 _this.options = {
-                    title: { text: _this.team.name },
+                    title: { text: _this.odd.broker.name + " best for " + _this.odd.team.name },
                     xAxis: {
                         type: 'datetime'
                     },
                     series: [{
                             data: res.map(function (r) {
-                                var best = Math.max.apply(0, r.values);
-                                return { y: best, x: r.created, name: _this.team.name + " best odd on " + r.created.toLocaleDateString() };
+                                var o = new odd_1.Odd(r.created, r.values, r.team_id, r.broker_id);
+                                var d = new Date(r.created);
+                                var best = o.best;
+                                return { y: best, x: d, name: _this.odd.team.name + " best odd on " + d.toLocaleDateString() };
                             }),
                         }]
                 };
@@ -41,12 +43,12 @@ var OwOddsGraphComponent = (function () {
     };
     __decorate([
         core_1.Input(), 
-        __metadata('design:type', team_1.Team)
-    ], OwOddsGraphComponent.prototype, "team", void 0);
+        __metadata('design:type', odd_1.Odd)
+    ], OwOddsGraphComponent.prototype, "odd", void 0);
     OwOddsGraphComponent = __decorate([
         core_1.Component({
             selector: 'ow-odds-graph',
-            template: "<h2>Price Movement</h2> \n    <div [hidden]=\"team\">Please select a team</div>\n    <chart [hidden]=\"!team\" [options]=\"options\"></chart>\n  ",
+            template: "<h2>Price Movement</h2> \n    <div [hidden]=\"odd\">Please select an odd</div>\n    <chart [hidden]=\"!odd\" [options]=\"options\"></chart>\n  ",
         }), 
         __metadata('design:paramtypes', [odds_service_1.OddsService])
     ], OwOddsGraphComponent);

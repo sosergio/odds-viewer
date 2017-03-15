@@ -1,5 +1,5 @@
 export class Team {
-    id: number;
+    team_id: number;
     name:string;
     picture_url:string;
 }

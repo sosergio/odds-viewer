@@ -10,8 +10,9 @@ const oddsAppService = require('../application/odds-app-service');
 const oddRepository = require('../repository/odd-repository');
 const teamRepository = require('../repository/team-repository');
 const brokerRepository = require('../repository/broker-repository');
+const seedData = require('../repository/seed-data');
 
-const start = (serverSettings) => {
+const start = (dbConnection, serverSettings) => {
   return new Promise((resolve, reject) => {
 
     console.log("SERVER START");
@@ -43,10 +44,23 @@ const start = (serverSettings) => {
     })
     
     //load application services and repositories
-    var os = oddsAppService(oddRepository,teamRepository,brokerRepository);
+    var or = oddRepository(dbConnection);
+    var tr = teamRepository(dbConnection);
+    var br = brokerRepository(dbConnection);
+    var os = oddsAppService(or,tr,br);
     oddsApi(router, os);
     teamsApi(router, os);
     brokersApi(router, os);
+    
+    //seed data
+    var sd = seedData(or, tr, br);
+    console.log("server.js teamRepo");
+    console.log(tr != null);
+    sd.seedTeams();
+    sd.seedBrokers();
+    if(serverSettings.initMockOdds) {
+      sd.seedOdds();
+    }
 
     // all of our routes will be prefixed with /api
     app.use('/api', router);

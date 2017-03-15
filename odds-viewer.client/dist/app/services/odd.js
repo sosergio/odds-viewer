@@ -6,6 +6,13 @@ var Odd = (function () {
         this.team_id = teamId;
         this.broker_id = brokerId;
     }
+    Object.defineProperty(Odd.prototype, "best", {
+        get: function () {
+            return Math.max.apply(0, this.values);
+        },
+        enumerable: true,
+        configurable: true
+    });
     return Odd;
 }());
 exports.Odd = Odd;

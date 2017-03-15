@@ -8,4 +8,7 @@ var OddSchema   = new Schema({
     broker_id:Number
 });
 
-module.exports = mongoose.model('Odd', OddSchema);
+module.exports = (dbConnection) => {
+    this.dbConnection = dbConnection;
+    return this.dbConnection.model('Odd', OddSchema);
+}

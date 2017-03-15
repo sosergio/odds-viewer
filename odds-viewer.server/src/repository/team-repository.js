@@ -2,10 +2,13 @@ var mongoose     = require('mongoose');
 var Schema       = mongoose.Schema;
 
 var TeamSchema   = new Schema({
-    broker_id:Number,
-    name:Number,
-    
+    team_id:Number,
+    name:String,
     pictureUrl:String
 });
 
-module.exports = mongoose.model('Team', TeamSchema);
+module.exports = (dbConnection) => {
+    this.dbConnection = dbConnection;
+    return this.dbConnection.model('Team', TeamSchema);
+}
+
