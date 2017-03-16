@@ -8,21 +8,6 @@ This app shows the best odds available from different bookmakers for the winner 
 * [MongoDb] - NoSql database
 
 
-### Running the client
-Install the dependencies and devDependencies and start the server.
-
-```sh
-$ cd odds-viewer.client
-$ npm install
-$ npm start
-```
-This will open your browser at the following address
-
-
-```sh
-127.0.0.1:5000
-```
-
 ### Running the server
 
 Install the dependencies and devDependencies and start the server.
@@ -35,7 +20,30 @@ $ npm start
 This will start the server at the following address
 
 ```sh
-127.0.0.1:3000
+localhost:5000
+```
+
+### Running the client
+Install the dependencies and devDependencies and start the server.
+
+```sh
+$ cd odds-viewer.client
+$ npm install
+$ npm start
+```
+This will open your browser at the following address
+
+
+```sh
+localhost:3000
+```
+
+You can adjust the client to read from the running node server or from a static mock file by changing the environment in:
+```sh
+odd-viewer.client\config\env.json
+{
+    "env":"backend|mock"
+}
 ```
 
 
